@@ -1,4 +1,4 @@
-import { getToken } from "@/lib/api"
+import { getToken, getTokenClient } from "@/lib/api"
 import { CreateHomeResponse, DeleteHomeResponse, ListAllHomesResponse } from "./homes.types"
 import api from "@/lib/axios"
 
@@ -12,7 +12,7 @@ export async function fetchHomes(): Promise<ListAllHomesResponse> {
 }
 
 export async function createHome(name: string): Promise<CreateHomeResponse> {
-  const token = await getToken()
+  const token = await getTokenClient()
   const res = await api.post<CreateHomeResponse>(
     "/devices/homes",
     { name },

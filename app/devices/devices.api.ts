@@ -11,12 +11,11 @@ export async function fetchDevices(): Promise<ListAllDevicesResponse> {
   return res.data
 }
 
-export async function fetchDevice(deviceId: string): Promise<DeviceBootstrapInfo> {
-  const token = await getToken()
-  const res = await api.get<DeviceBootstrapInfo>(`/devices/${deviceId}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  return res.data
+export async function fetchDevice(deviceId: string): Promise<DeviceBootstrapInfo["device"]|undefined> {
+  const allDevices = await fetchDevices();
+  const device = allDevices.find((device) => device.id == deviceId)
+  console.log(device)
+  return device
 }
 
 export async function claimDevice(

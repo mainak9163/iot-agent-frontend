@@ -19,7 +19,7 @@ export default async function DevicesPage() {
             No devices yet — a silent workshop waiting for its first tool. 🛠️🌙
           </p>
         ) : (
-          devices.map((d) => <DeviceCard key={d.device.id} info={d} />)
+          devices.map((d) => <DeviceCard key={d.id} device={d} />)
         )}
       </div>
     </div>

@@ -18,4 +18,4 @@ export type ClaimDeviceResponse={
     "homeId": string
 }
 
-export type ListAllDevicesResponse = DeviceBootstrapInfo[]
+export type ListAllDevicesResponse = DeviceBootstrapInfo["device"][]

@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { DeviceBootstrapInfo } from "../devices.types"
 
-export default function DeviceCard({ info }: { info: DeviceBootstrapInfo }) {
-  const device = info.device
+export default function DeviceCard({ device }: { device: DeviceBootstrapInfo["device"] }) {
 
   return (
     <Card className="p-4 flex justify-between items-center">

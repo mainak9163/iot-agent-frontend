@@ -6,8 +6,8 @@ import { fetchAllItems } from "./inventory-management.api"
 import ItemCard from "./components/item-card"
 
 
-export default async function ItemsPage({ params }: { params: { deviceId: string } }) {
-  const { deviceId } = params
+export default async function ItemsPage({ params }: { params: Promise<{ deviceId: string }> }) {
+  const { deviceId } =await params
   const data: GetAllItemsResponse = await fetchAllItems(deviceId)
 
   const { items, counts } = data

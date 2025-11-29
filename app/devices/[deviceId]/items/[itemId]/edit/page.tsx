@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button"
 
 import { useRouter } from "next/navigation"
 import { Item } from "../../inventory-management.types"
-import { fetchItem } from "../../inventory-management.api"
-import { updateItem } from "@/lib/api"
+import { fetchItem, updateItem } from "../../inventory-management.api"
 
 
 export default function EditItemPage({ params }: { params: { deviceId: string; itemId: string } }) {
@@ -29,7 +28,7 @@ export default function EditItemPage({ params }: { params: { deviceId: string; i
 
   async function handleSubmit() {
     await updateItem(deviceId, itemId, {
-      quantity,
+      quantity:Number(quantity),
       notes,
     })
     router.push(`/devices/${deviceId}/items`)

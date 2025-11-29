@@ -1,9 +1,10 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { deleteItem } from "@/lib/api";
+
 
 import { useRouter } from "next/navigation"
+import { deleteItem } from "../../inventory-management.api";
 
 export default function DeleteItemPage({
   params,

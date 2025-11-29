@@ -5,16 +5,11 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import axios from "@/lib/axios"
-import Cookies from "js-cookie"
-import { useAuth } from "@/lib/auth-store"
 import { useRouter } from "next/navigation"
 import { login, register } from "@/lib/api"
 
 export default function RegisterPage() {
   const router = useRouter()
-  const setToken = useAuth(s => s.setToken)
-
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")

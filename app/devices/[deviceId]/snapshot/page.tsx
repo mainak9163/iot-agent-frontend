@@ -1,8 +1,8 @@
 import { fetchDeviceSnapshot } from "../device-monitoring.api"
 
 
-export default async function SnapshotPage({ params }: { params: { deviceId: string } }) {
-  const { deviceId } = params
+export default async function SnapshotPage({ params }: { params: Promise<{ deviceId: string }> }) {
+  const { deviceId } = await params
   const snap = await fetchDeviceSnapshot(deviceId)
 
   return (

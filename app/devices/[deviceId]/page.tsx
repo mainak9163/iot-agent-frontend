@@ -1,9 +1,19 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { DeviceBootstrapInfo } from "../devices.types"
+export const dynamic = "force-dynamic"
+
 import { fetchDevice } from "../devices.api"
+import { DeviceBootstrapInfo } from "../devices.types"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
-import { Cpu, MapPin, Clock } from "lucide-react"
+import {
+  Cpu,
+  MapPin,
+  Clock,
+  Thermometer,
+  Gauge,
+  ListChecks,
+  Boxes,
+} from "lucide-react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export default async function DeviceOverviewPage({
   params,
@@ -11,76 +21,48 @@ export default async function DeviceOverviewPage({
   params: Promise<{ deviceId: string }>
 }) {
   const { deviceId } = await params
-  const device: DeviceBootstrapInfo["device"] | undefined = await fetchDevice(deviceId)
+
+  const device: DeviceBootstrapInfo["device"] | undefined =
+    await fetchDevice(deviceId)
+
+  if (!device) {
+    return (
+      <p className="text-muted-foreground">
+        Device not found or unavailable.
+      </p>
+    )
+  }
 
   return (
-    <div className="p-8 max-w-3xl mx-auto space-y-10">
+    <div className="space-y-10">
 
-      {/* ===========================
-          HEADER CARD
-      ============================ */}
+      {/* HEADER SUMMARY CARD */}
       <Card className="shadow-sm">
         <CardHeader>
-          <h1 className="text-3xl font-semibold">{device?.name}</h1>
+          <h1 className="text-2xl font-semibold">{device.name}</h1>
+          <p className="text-sm text-muted-foreground">
+            Device Overview
+          </p>
         </CardHeader>
 
-        <CardContent className="text-muted-foreground space-y-2">
+        <CardContent className="space-y-3 text-muted-foreground">
           <p className="flex items-center gap-2">
             <Cpu className="h-4 w-4 text-primary" />
-            Serial: {device?.pi_serial}
+            Serial: {device.pi_serial}
           </p>
-
           <p className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" />
-            Location: {device?.location_label}
+            Location: {device.location_label}
           </p>
-
           <p className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />
             Last Seen:{" "}
-            {device?.last_seen_at
+            {device.last_seen_at
               ? new Date(device.last_seen_at).toLocaleString()
               : "Never"}
           </p>
         </CardContent>
       </Card>
-
-      {/* ===========================
-          ACTIONS SECTION
-      ============================ */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-medium">Device Settings</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-          <Link href={`/devices/${deviceId}/edit`} className="w-full">
-            <Button variant="secondary" className="w-full justify-start gap-2">
-              ✏️ Edit Name
-            </Button>
-          </Link>
-
-          <Link href={`/devices/${deviceId}/location`} className="w-full">
-            <Button variant="secondary" className="w-full justify-start gap-2">
-              📍 Update Location
-            </Button>
-          </Link>
-
-          <Link href={`/devices/${deviceId}/security`} className="w-full">
-            <Button variant="secondary" className="w-full justify-start gap-2">
-              🔐 Update Name + Password
-            </Button>
-          </Link>
-
-          <Link href={`/devices/${deviceId}/delete`} className="w-full">
-            <Button
-              variant="destructive"
-              className="w-full justify-start gap-2"
-            >
-              🗑️ Delete Device
-            </Button>
-          </Link>
-        </div>
-      </div>
     </div>
   )
 }
